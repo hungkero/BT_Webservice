@@ -5,10 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +21,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -36,7 +44,38 @@ public class Main2Activity extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
-        readArray();
+//        readArray();
+        readArrayXML();
+        
+    }
+
+    private void readArrayXML() {
+
+        try {
+            InputStream is = getAssets().open("danhsachhoadon.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(is);
+            Element element=doc.getDocumentElement();
+            element.normalize();
+
+            NodeList nList = doc.getElementsByTagName("hoaDon");
+
+
+            for (int i=0; i<nList.getLength(); i++) {
+
+                Node node = nList.item(i);
+                Element element2 = (Element) node;
+
+                String idHoadon = element2.getAttribute("ID_HOADON");
+                String danhba = element2.getAttribute("DANHBA");
+
+                arrayList.add(idHoadon + " " +danhba);
+            }
+
+            arrayAdapter.notifyDataSetChanged();
+
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     private void readArray() {
