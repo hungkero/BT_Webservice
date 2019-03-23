@@ -45,7 +45,7 @@ public class Main2Activity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
 
 //        readArray();
-        readArrayXML();
+        readArrayXML(); //for reading data from xml file
         
     }
 
