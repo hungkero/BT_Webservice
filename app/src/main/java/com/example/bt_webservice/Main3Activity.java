@@ -42,6 +42,8 @@ public class Main3Activity extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
+
+
         ParseJsonTivi parseJsonTivi = new ParseJsonTivi();
         parseJsonTivi.execute("http://172.24.45.110/api/danhsachtivi.json");
 
